@@ -7,6 +7,7 @@ class NativeTensor:
     def __init__(self, values):
         self.values = values
         
+    @staticmethod
     def from_values(values):
         return NativeTensor(values)
     
@@ -34,6 +35,7 @@ class NativeTensor:
     def __repr__(self):
         return "NativeTensor(%s)" % self.values
     
+    @staticmethod
     def wrap_if_needed(y):
         if isinstance(y, int) or isinstance(y, float): return NativeTensor.from_values(np.array([y]))
         if isinstance(y, np.ndarray): return NativeTensor.from_values(y)
@@ -151,10 +153,10 @@ class PublicEncodedTensor:
             elements = encode(values)
         assert isinstance(elements, np.ndarray), "%s, %s, %s" % (values, elements, type(elements))
         self.elements = elements
-    
+    @staticmethod
     def from_values(values):
         return PublicEncodedTensor(values)
-    
+    @staticmethod
     def from_elements(elements):
         return PublicEncodedTensor(None, elements)
     
@@ -264,6 +266,7 @@ class PublicFieldTensor:
     def __init__(self, elements):
         self.elements = elements
 
+    @staticmethod
     def from_elements(elements):
         return PublicFieldTensor(elements)
         
@@ -334,10 +337,10 @@ class PrivateFieldTensor:
         assert shares0.shape == shares1.shape
         self.shares0 = shares0
         self.shares1 = shares1
-    
+    @staticmethod
     def from_elements(elements):
         return PrivateFieldTensor(elements)
-    
+    @staticmethod
     def from_shares(shares0, shares1):
         return PrivateFieldTensor(None, shares0, shares1)
     
@@ -435,14 +438,14 @@ class PrivateEncodedTensor:
         assert shares0.shape == shares1.shape
         self.shares0 = shares0
         self.shares1 = shares1
-    
+    @staticmethod
     def from_values(values):
         return PrivateEncodedTensor(values)
-    
+    @staticmethod
     def from_elements(elements):
         shares0, shares1 = share(elements)
         return PrivateEncodedTensor(None, shares0, shares1)
-    
+    @staticmethod
     def from_shares(shares0, shares1):
         return PrivateEncodedTensor(None, shares0, shares1)
     
